@@ -181,7 +181,20 @@ Age-Of-Shoguns/
 └── docs/screenshots/
 ```
 
-[3d/README.md](3d/README.md) has a file-by-file map of the 3D code.
+### Code map
+
+| Path | What it does |
+| --- | --- |
+| `3d/src/game/` | Simulation only (no rendering): economy, AI, A* pathfinding, combat, raids, upgrades. |
+| `3d/src/gfx/body.js` | Skinned human bodies (one continuous mesh per character) with faces, hands and clothing. |
+| `3d/src/gfx/rig.js` | Skeletons, armour and gear, horse rig, and every animation clip including the martial-arts moves. |
+| `3d/src/director.js` | Cinematic battle camera. |
+| `3d/src/gfx/globe.js` | Opening globe sequence (coastlines: Natural Earth, public domain). |
+| `3d/src/gfx/models.js` | Procedural buildings, trees, rocks, grass and banners. |
+| `3d/src/gfx/terrain.js` | Height field, ground colouring, lake, grass and the fog-of-war texture. |
+| `3d/src/gfx/sky.js` | Sun and moon cycle, sky, fog, environment lighting and rain. |
+| `3d/src/gfx/view.js` | Keeps a 3D object in sync with each simulated entity and plays effects. |
+| `3d/src/ui/hud.js`, `src/camera.js`, `src/main.js` | HUD, minimap, RTS camera, input and the render loop. |
 
 ## 🙏 Credits
 

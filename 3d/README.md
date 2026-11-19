@@ -1,59 +1,202 @@
-# Age of Shoguns 3D
+<div align="center">
 
-Real-time strategy in a feudal-Japan valley, built with Three.js and Vite.
+# ⛩️ Age of Shoguns
 
-## Run
+**A real-time strategy game set in feudal Japan, 1560. It runs in the browser.**
 
-With Docker (from the repository root):
+Build a village in Kai Province, raise an army of samurai and ashigaru, and survive the ronin raids.<br>
+Then destroy the enemy castle, or raise a Great Pagoda and hold it to win.
+
+![Three.js](https://img.shields.io/badge/Three.js-r170-black?logo=three.js)
+![Vite](https://img.shields.io/badge/Vite-5-646CFF?logo=vite&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-compose-2496ED?logo=docker&logoColor=white)
+![No assets](https://img.shields.io/badge/art-100%25%20procedural-c0352a)
+
+<img src="../docs/screenshots/realistic-castle.jpg" alt="The player's castle at the start of the game in Realistic mode" width="900">
+
+</div>
+
+---
+
+## Contents
+
+- [Play it](#-play-it)
+- [Screenshots](#-screenshots)
+- [Features](#-features)
+- [Two graphics modes](#-two-graphics-modes-classic-and-realistic)
+- [How to win](#-how-to-win)
+- [Controls](#-controls)
+- [Units and buildings](#-units-and-buildings)
+- [How it's built](#-how-its-built)
+- [Project layout](#-project-layout)
+- [Credits](#-credits)
+
+## 🎮 Play it
+
+**With Docker (recommended):**
 
 ```sh
-docker compose up -d --build            # 3D game: http://localhost:8686   classic 2D game: http://localhost:8687
-docker compose --profile dev up         # 3D game with hot reload: http://localhost:5173
-docker compose down                     # stop everything
+git clone git@github.com:Subhagatoadak/Age-Of-Shoguns.git
+cd Age-Of-Shoguns
+docker compose up -d --build
 ```
 
-Ports can be changed with `SHOGUNS_3D_PORT`, `SHOGUNS_2D_PORT` and `SHOGUNS_DEV_PORT`.
+| What | URL |
+| --- | --- |
+| 3D game | <http://localhost:8686> |
+| Classic 2D game | <http://localhost:8687> |
+| 3D game with hot reload (`docker compose --profile dev up`) | <http://localhost:5173> |
 
-Without Docker (Node 20+):
+To use other ports, set `SHOGUNS_3D_PORT`, `SHOGUNS_2D_PORT` or `SHOGUNS_DEV_PORT`. Stop everything with `docker compose down`.
+
+**Without Docker (Node 20+):**
 
 ```sh
+cd 3d
 npm install
-npm run dev        # http://localhost:5173
-npm run build      # static files in dist/
+npm run dev      # http://localhost:5173
+npm run build    # static site in 3d/dist/
 ```
 
-## What's in the game
+## 📸 Screenshots
 
-- **A living town.** Families move into your houses; men, women and children go to market, pray at the temple, farm, chat and play by day and sleep at night. Children are born and grow up, elders pass away, newcomers arrive when the town is happy and families leave when it isn't. Click any townsperson to see who they are.
-- **Time passes.** The calendar runs from 1560 month by month (old Japanese month names) through spring blossom, green summer, red autumn maples and the harvest, and winter snow.
-- **Society.** The Town panel shows population, families, happiness, taxes (low / fair / heavy), food eaten and grown, and a chronicle of everything that happens. Hold matsuri festivals at the temple; recruit townsfolk as villagers.
-- **Four ages.** Village → Feudal → Castle → Shogunate, researched at the castle, each unlocking buildings, units and upgrades and raising the population cap.
-- **National borders.** Your territory spreads from your buildings and glows on the ground; you can only build inside it, and soldiers in enemy land suffer attrition.
-- **Livestock and wildlife.** Cattle ranches feed the town, chickens peck around houses, deer roam the forests and bolt from soldiers.
-- **Raid settings.** Settings lets you turn raids off, choose when the first raid comes, the gap between raids and their size, or send one at once.
-- **Battle formations.** Armies march in ranks: cavalry and melee in front, archers behind, monks at the rear.
-- **Save / Continue.** Autosaves every minute; Save button; Continue on the start screen.
+| Realistic mode, at ground level | Night and rain, with depth of field in the battle cam |
+| --- | --- |
+| ![Townsfolk and a spearman in front of the castle, in long grass](../docs/screenshots/realistic-ground-level.jpg) | ![The castle at night in the rain, with lit lanterns](../docs/screenshots/realistic-night-rain.jpg) |
 
-## Controls
+| Classic mode | Realistic mode |
+| --- | --- |
+| ![The castle in Classic mode](../docs/screenshots/classic-castle.jpg) | ![The same view in Realistic mode](../docs/screenshots/realistic-castle.jpg) |
 
-- **Drag the map** with the left mouse button (or one finger) to move around; it glides on release. Two-finger trackpad scroll also pans.
-- Mouse wheel, trackpad pinch or the − / + buttons zoom; zoom right in for ground-level views. Q / E or middle-drag rotates, WASD pans.
-- Click selects, Shift+drag box-selects, right-click moves, attacks, gathers or builds. Touch: tap to select and command, pinch to zoom, twist to rotate.
-- **Battle cam** (button or T): during raids the camera films the duels up close with letterbox, slow motion on killing blows and hit shake. Any click, drag or key hands control back.
-- Panel actions on Z X C V…, Ctrl+1–9 saves a group, Space jumps to the last alert, H castle, `.` idle villager, G army, F speed, P pause.
-- The opening flies from the globe down to Kai Province in Japan; Skip or Esc jumps straight in.
+## ✨ Features
 
-## Code map
+**A strategy game**
+- Gather food, wood and gold, then build houses, rice paddies, storehouses, barracks, watchtowers, a blacksmith, a temple, a stable, a market and cattle ranches.
+- **Four ages:** Village → Feudal → Castle → Shogunate. Each one unlocks buildings, units and upgrades and raises the population cap.
+- **Upgrades:** iron tools, tamahagane steel, lamellar armour, fletching, masonry and Zen discipline.
+- **National borders.** Your territory spreads out from your buildings and glows on the ground. You can only build inside it, and your soldiers lose health over time while they are in enemy land.
+- **Ronin raids** come in waves, and every fifth wave is led by a warlord. In Settings you can choose when raids start, how often they come and how big they are, or turn them off.
+- **Battle formations:** cavalry and melee units march in front, archers behind them and monks at the rear.
+- Three difficulty levels. The game autosaves every minute and you can pick it up again with **Continue**.
+
+**A living town**
+- Families move into your houses. Men, women and children go to market, pray at the temple, farm, chat and play during the day and sleep at night.
+- Children are born and grow up and elders pass away. When the town is happy newcomers arrive; when it isn't, families leave.
+- Click anyone in town to see who they are. The **Town** panel shows happiness, taxes, food and a chronicle of what has happened. You can also hold *matsuri* festivals at the temple.
+- Cattle graze on the ranches, chickens peck around the houses, and deer roam the forests and run from soldiers.
+
+**A world that changes**
+- The calendar runs month by month from 1560, using the old Japanese month names. Cherry blossom comes in spring, the land is green in summer, maples turn red in autumn and snow falls in winter.
+- Day turns to night. The sky is physically based, the moon lights the valley at night, and stars come out.
+- Rain and snow change the light, the fog and how wet the ground looks.
+
+**Cinematic**
+- The game opens on the globe and flies down to Kai Province.
+- **Battle cam (T).** During raids the camera films duels up close. It adds letterbox bars, slows down on killing blows and shakes on hits.
+- Every character is a skinned, animated body, and fights use martial-arts moves.
+
+## 🖼️ Two graphics modes: Classic and Realistic
+
+The **Realistic / Classic** button in the top bar (or the **R** key) switches between the two modes while you play, and your choice is saved. Classic draws exactly what the game drew before Realistic mode existed, so it stays the fast option.
+
+| Feature | Classic | Realistic |
+| --- | :---: | :---: |
+| Tone mapping | ACES | AgX, with a colour grade, vignette and film grain |
+| Ambient occlusion (GTAO) | – | ✅ |
+| Height fog that glows toward the sun | – | ✅ |
+| Lake | Flat | Real reflections |
+| Ground detail | – | Procedural detail, triplanar mapping and bump |
+| Grass, ferns, flowers, pebbles and fallen leaves | Some | Dense |
+| Shadows | 2048 (1024 on Low) | 4096, fitted to the camera and snapped to texels |
+| Depth of field in the battle cam | – | ✅ |
+| Foot placement on slopes (IK), leaning, breathing, looking at targets | – | ✅ |
+| Footprints, dust from feet, knockback on hits | – | ✅ |
+
+Realistic mode is on by default on desktop and off on screens 700 px wide or narrower. The **High / Low** quality button is a separate setting and works in both modes.
+
+## 🏯 How to win
+
+- **Conquest:** destroy the enemy castle in the north-east.
+- **Wonder:** build the **Great Pagoda** and hold it for **3 minutes** while the enemy attacks it with everything they have.
+
+You lose if your castle falls.
+
+## 🕹️ Controls
+
+| Action | Mouse / keyboard | Touch |
+| --- | --- | --- |
+| Move the camera | Left-drag, two-finger scroll, or WASD / arrow keys | One-finger drag |
+| Zoom | Mouse wheel, pinch, or the − / + buttons | Pinch |
+| Rotate | Q / E or middle-drag | Twist |
+| Select | Click, or Shift+drag to box-select | Tap |
+| Command (move, attack, gather, build) | Right-click | Tap |
+
+| Key | Does |
+| --- | --- |
+| **Z X C V …** | Actions in the selection panel |
+| **Ctrl+1–9** / **1–9** | Save / select a group (press twice to jump to it) |
+| **Space** | Jump to the last alert |
+| **H** | Go to your castle |
+| **.** | Select an idle villager |
+| **G** | Select your army |
+| **T** | Battle cam |
+| **R** | Switch between Realistic and Classic |
+| **F** | Change game speed |
+| **P** | Pause |
+| **Esc** | Skip the intro / cancel placing a building |
+
+## ⚔️ Units and buildings
+
+| Unit | Trained at | Role |
+| --- | --- | --- |
+| Villager | Castle | Gathers, builds and repairs |
+| Ashigaru spearman | Barracks | Cheap front-line infantry |
+| Archer | Barracks | Long range |
+| Samurai | Barracks (needs a blacksmith) | Elite melee |
+| Sohei monk | Temple | Heals nearby units |
+| Mounted samurai | Stable | Fast, heavy cavalry |
+
+Other buildings: **House** (population), **Rice paddy** and **Cattle ranch** (food), **Storehouse** (drop-off point and iron tools), **Watchtower** (defence, holds a garrison), **Blacksmith** (steel, armour and fletching), **Market** (trade), and **Great Pagoda** (the wonder).
+
+## 🛠️ How it's built
+
+- **Three.js r170 + Vite.** There are no 3D model files and no texture images. All buildings, trees, people, horses and armour are generated by code when the game starts, and each model is merged into a single draw call.
+- **Simulation and rendering are separate.** `3d/src/game/` holds the rules (economy, AI, A* pathfinding, combat, raids, the town's society) and doesn't touch Three.js. The view layer keeps a 3D object in step with each entity in the simulation.
+- **Shader hooks:** fog of war, national borders, wind in grass and trees, autumn colours and snow cover are added to Three.js's standard materials with `onBeforeCompile`.
+- **Realistic mode** is a self-contained layer (`3d/src/gfx/realism.js`). It adds a post-processing chain (GTAO → height fog → depth of field → bloom → SMAA → colour grade) and an animation layer that runs after the animation mixer. Each Realistic-only shader branch is switched by a uniform, so Classic renders exactly as before.
+- **Docker:** a multi-stage build that serves the production 3D game from nginx, plus a dev profile with hot reload.
+
+## 📁 Project layout
+
+```
+Age-Of-Shoguns/
+├── 3d/                      # the 3D game (Three.js + Vite)
+│   ├── src/game/            # simulation: rules, AI, pathfinding, society
+│   ├── src/gfx/             # terrain, sky, models, bodies, rigs, realism
+│   ├── src/ui/hud.js        # HUD and minimap
+│   ├── src/director.js      # cinematic battle camera
+│   └── Dockerfile           # production (nginx) and dev targets
+├── index.html               # the original 2D game (Phaser), in one file
+├── docker-compose.yml
+└── docs/screenshots/
+```
+
+### Code map
 
 | Path | What it does |
 | --- | --- |
-| `src/game/` | Simulation only (no rendering): economy, AI, A* pathfinding, combat, raids, upgrades. |
-| `src/gfx/body.js` | Skinned human bodies (one continuous mesh per character) with faces, hands and clothing. |
-| `src/gfx/rig.js` | Skeletons, armour and gear, horse rig, and every animation clip including the martial-arts moves. |
-| `src/director.js` | Cinematic battle camera. |
-| `src/gfx/globe.js` | Opening globe sequence (coastlines: Natural Earth, public domain). |
-| `src/gfx/models.js` | Procedural buildings, trees, rocks, grass and banners. |
-| `src/gfx/terrain.js` | Height field, ground colouring, lake, grass and the fog-of-war texture. |
-| `src/gfx/sky.js` | Sun and moon cycle, sky, fog, environment lighting and rain. |
-| `src/gfx/view.js` | Keeps a 3D object in sync with each simulated entity and plays effects. |
-| `src/ui/hud.js`, `src/camera.js`, `src/main.js` | HUD, minimap, RTS camera, input and the render loop. |
+| `3d/src/game/` | Simulation only (no rendering): economy, AI, A* pathfinding, combat, raids, upgrades. |
+| `3d/src/gfx/body.js` | Skinned human bodies (one continuous mesh per character) with faces, hands and clothing. |
+| `3d/src/gfx/rig.js` | Skeletons, armour and gear, horse rig, and every animation clip including the martial-arts moves. |
+| `3d/src/director.js` | Cinematic battle camera. |
+| `3d/src/gfx/globe.js` | Opening globe sequence (coastlines: Natural Earth, public domain). |
+| `3d/src/gfx/models.js` | Procedural buildings, trees, rocks, grass and banners. |
+| `3d/src/gfx/terrain.js` | Height field, ground colouring, lake, grass and the fog-of-war texture. |
+| `3d/src/gfx/sky.js` | Sun and moon cycle, sky, fog, environment lighting and rain. |
+| `3d/src/gfx/view.js` | Keeps a 3D object in sync with each simulated entity and plays effects. |
+| `3d/src/ui/hud.js`, `src/camera.js`, `src/main.js` | HUD, minimap, RTS camera, input and the render loop. |
+
+## 🙏 Credits
+
+- Coastlines on the opening globe: [Natural Earth](https://www.naturalearthdata.com/) (public domain).
+- Built with [Three.js](https://threejs.org/), [Vite](https://vitejs.dev/) and [Phaser](https://phaser.io/) (2D version).
