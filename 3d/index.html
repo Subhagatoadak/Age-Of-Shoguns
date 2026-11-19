@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Age of Shoguns 3D</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;800&family=Noto+Sans:wght@400;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div id="app"></div>
+  <div id="overlay"></div>
+  <div id="box"></div>
+  <header id="top">
+    <div class="res">
+      <span class="r"><i class="dot food"></i><b id="r-food">0</b></span>
+      <span class="r"><i class="dot wood"></i><b id="r-wood">0</b></span>
+      <span class="r"><i class="dot gold"></i><b id="r-gold">0</b></span>
+      <span class="r">Pop <b id="r-pop">0</b></span>
+      <span class="r" title="Population of the town"><i class="dot pop"></i><b id="r-people">0</b></span>
+      <span class="r" title="Happiness"><i class="mood" id="r-mood"></i><b id="r-happy">0</b></span>
+      <span class="r"><b id="r-clock">0:00</b></span>
+      <span class="r date"><b id="r-date">Spring 1560</b> · <span id="r-age">Village</span></span>
+    </div>
+    <div id="banner"></div>
+    <nav>
+      <button id="btn-zout" title="Zoom out (-)">−</button><button id="btn-zin" title="Zoom in (+)">+</button>
+      <button id="btn-idle">Idle</button><button id="btn-army">Army</button><button id="btn-cine" title="Cinematic battle camera (T)">Battle cam</button><button id="btn-speed">1x</button>
+      <button id="btn-town" title="Your town and its people">Town</button><button id="btn-settings" title="Raid timing and options">Settings</button><button id="btn-save" title="Save the game">Save</button>
+      <button id="btn-real" title="Realistic graphics: ambient occlusion, mist, lake reflections, detailed ground, foot IK (R)">Realistic</button><button id="btn-quality">High</button><button id="btn-sound">Sound</button><button id="btn-pause">Pause</button>
+    </nav>
+  </header>
+  <div id="toasts"></div>
+  <footer id="panel">
+    <div class="info"><h2 id="p-title"></h2><p id="p-info"></p><div id="p-acts"></div></div>
+    <canvas id="minimap" width="240" height="160"></canvas>
+  </footer>
+  <div id="cine-top"></div><div id="cine-bot"></div><div id="cine-cap"></div><div id="cine-hint">Click, drag or press T to take back control</div>
+  <aside id="town"></aside>
+  <div id="dialog"></div>
+  <div id="intro-cap"></div><div id="intro-fade"></div><button id="intro-skip">Skip ›</button>
+  <div id="loading"><div>Age of Shoguns<small>raising the valley…</small></div></div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

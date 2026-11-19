@@ -1,0 +1,34 @@
+# Age of Shoguns
+#   docker compose up -d --build          -> 3D game at http://localhost:8686, classic 2D game at http://localhost:8687
+#   docker compose --profile dev up       -> 3D game with hot reload at http://localhost:5173
+# Ports can be changed with SHOGUNS_3D_PORT, SHOGUNS_2D_PORT and SHOGUNS_DEV_PORT.
+services:
+  shoguns-3d:
+    build:
+      context: ./3d
+      target: prod
+    image: age-of-shoguns-3d:latest
+    ports:
+      - "${SHOGUNS_3D_PORT:-8686}:80"
+    restart: unless-stopped
+
+  shoguns-2d:
+    image: nginx:1.27-alpine
+    volumes:
+      - ./index.html:/usr/share/nginx/html/index.html:ro
+    ports:
+      - "${SHOGUNS_2D_PORT:-8687}:80"
+    restart: unless-stopped
+
+  shoguns-3d-dev:
+    profiles: ["dev"]
+    build:
+      context: ./3d
+      target: dev
+    environment:
+      - VITE_POLL=1
+    volumes:
+      - ./3d:/app
+      - /app/node_modules        # keep the container's own node_modules
+    ports:
+      - "${SHOGUNS_DEV_PORT:-5173}:5173"
